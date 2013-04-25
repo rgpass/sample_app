@@ -1,11 +1,23 @@
 SampleApp::Application.routes.draw do
-  get "static_pages/home"
 
-  get "static_pages/help"
+  get "users/new" # Need to leave this in here
+                  # Taken care of below
 
-  get "static_pages/about"
+  # You can have the root of your site routed with "root"
+  # just remember to delete public/index.html.
+  # root :to => 'welcome#index'
 
-  get "static_pages/contact"
+  root :to => 'static_pages#home'
+
+  # How you map all other views
+
+  match '/help',    to: 'static_pages#help'
+
+  match '/contact', to: 'static_pages#contact'
+
+  match '/about',   to: 'static_pages#about'
+
+  match '/signup',  to: 'users#new'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
