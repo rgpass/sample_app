@@ -7,6 +7,8 @@
 
 # To create another one, use:
 # $ rails generate integration_test name_here
+# This one was generated with:
+# $ rails generate integrate_test static_pages
 
 # Note: Some of the lines use single-quoted strings and others
 # use double-quoted. The only difference is that you cannot
