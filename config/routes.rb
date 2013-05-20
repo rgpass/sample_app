@@ -1,8 +1,15 @@
 SampleApp::Application.routes.draw do
   resources :users
+  resources :sessions, only: [:new, :create, :destroy]
 
   # This provides all of the RESTful architecture
   # so now /users/1 will show the first user's profile
+  # For sessions though, we do not need edit or update,
+  # so we limit it to only new, create, destroy
+
+
+  match '/signin',  to: 'sessions#new'
+  match '/signout', to: 'sessions#destroy', via: :delete  
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
