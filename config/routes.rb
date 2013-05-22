@@ -1,6 +1,7 @@
 SampleApp::Application.routes.draw do
   resources :users
-  resources :sessions, only: [:new, :create, :destroy]
+  resources :sessions,   only: [:new, :create, :destroy]
+  resources :microposts, only: [:create, :destroy]
 
   # This provides all of the RESTful architecture
   # so now /users/1 will show the first user's profile
