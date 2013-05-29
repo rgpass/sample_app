@@ -37,10 +37,10 @@ describe "Static pages" do
     it { should_not have_selector 'title', text: '| Home' }
 
     describe "for signed-in users" do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryGirl.create(:user, email: "test@test.com") }
       before do
         FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum")
-        FactoryGirl.create(:micropost, user: user, content: "Dolor sit amet")
+        31.times { FactoryGirl.create(:micropost, user: user, content: "Dolor sit amet") }
         sign_in user
         visit root_path
       end
@@ -49,6 +49,22 @@ describe "Static pages" do
         user.feed.each do |item|
           page.should have_selector("li##{item.id}", text: item.content)
         end
+      end
+
+      it { should have_content(user.microposts.count) }
+
+      it { should have_selector('div.pagination') }
+
+      describe "follower/following counts" do
+        let(:other_user) { FactoryGirl.create(:user) }
+        before do
+          other_user.follow!(user)
+          visit root_path
+        end
+
+        it { should have_content("0 following") }
+        it { should have_link("following", href: following_user_path(user)) }
+        it { should have_link("followers", href: followers_user_path(user)) }
       end
     end
   end
